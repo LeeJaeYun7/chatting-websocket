@@ -1,4 +1,4 @@
-const jwtToken = "abcd"
+const jwtToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDc0NTk2ODg1NDE5NTA1ODE0IiwiaWF0IjoxNzQ0MDEwMTMxLCJleHAiOjE3NDQwMTM3MzF9.QCWyPZUeMlQIPG0p0DcoBqkCoujaCiDdp-urhGLHfb26LLfDLIU23ti-K8eBB7GoBWcQyUYAS6TdHi1cOYjkvA"
 
 const stompClient = new StompJs.Client({
     brokerURL: 'ws://localhost:8081/gs-guide-websocket',
@@ -11,8 +11,8 @@ stompClient.onConnect = (frame) => {
     setConnected(true);
     console.log('Connected: ' + frame);
 
-    stompClient.subscribe('/topic/websocket/connect', (response) => {
-            console.log('Response body: ', response.body);
+    stompClient.subscribe('/topic/chatMessage', (response) => {
+         console.log('Response body: ', response.body);
     });
 };
 
@@ -47,23 +47,17 @@ function disconnect() {
     console.log("Disconnected");
 }
 
-function sendUuid() {
+function sendChatMessage() {
      const messageData = {
-            uuid: $("#uuid").val()
-       };
-     stompClient.publish({
-            destination: "/api/v1/waitingQueue/token",  // 서버에서 처리하는 엔드포인트
-            body: JSON.stringify(messageData)  // JSON 형식으로 메시지 전송
-     });
-}
-
-function sendToken() {
-     const messageData = {
-            token: $("#token").val()
+         roomId: $("#roomId").val(),
+         receiverId: 1074952267225452259,
+         content: $("#chatMessage").val()
      };
 
+     console.log("Sending message:", messageData);  // 메시지 데이터 확인
+
      stompClient.publish({
-            destination: "/api/v1/waitingQueue/rank",  // 서버에서 처리하는 엔드포인트
+            destination: "/api/v1/chatMessage",  // 서버에서 처리하는 엔드포인트
             body: JSON.stringify(messageData)  // JSON 형식으로 메시지 전송
      });
 }
@@ -81,8 +75,8 @@ $(function () {
     $("#connect").click(() => connect());
     $("#disconnect").click(() => disconnect());
     $("#send").click(() => sendUuid());
-    $("#sendToken").click( () => {
-        console.log("sendToken button clicked");
-        sendToken()
+    $("#sendChatMessage").click( () => {
+        console.log("sendChatMessage button clicked");
+        sendChatMessage()
     });
 });

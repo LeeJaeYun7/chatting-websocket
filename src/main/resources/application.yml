@@ -4,6 +4,10 @@ server:
 jwt:
   secret: ${JWT_SECRET}
 
+chatting:
+  server:
+    url: ${SERVER_URL}
+
 logging:
   level:
     org.springframework.web.socket: DEBUG
