@@ -11,11 +11,9 @@ public class ChatMessageService {
 
     private final ChatMessageClient chatMessageClient;
 
-    public void sendChatMessage(String roomUuid, String senderUuid, String receiverUuid, String content, String jwtToken) {
-        ChatMessageServerRequest request = ChatMessageServerRequest.of(roomUuid, senderUuid, receiverUuid, content);
-
-        String authHeader = "Bearer " + jwtToken;
-        chatMessageClient.sendChatMessage(request, authHeader);
+    public void sendChatMessage(long roomId, long senderId, long receiverId, String content) {
+        ChatMessageServerRequest request = ChatMessageServerRequest.of(roomId, senderId, receiverId, content);
+        chatMessageClient.sendChatMessage(request);
     }
 }
 

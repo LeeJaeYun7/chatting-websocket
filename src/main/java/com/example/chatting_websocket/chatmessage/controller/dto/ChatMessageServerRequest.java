@@ -8,24 +8,24 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ChatMessageServerRequest {
 
-    private String roomUuid;     // 어떤 채팅방에 보낸 건지
-    private String senderUuid;
-    private String receiverUuid;
+    private long roomId;     // 어떤 채팅방에 보낸 건지
+    private long senderId;
+    private long receiverId;
     private String content;    // 메시지 내용
 
     @Builder
-    public ChatMessageServerRequest(String roomUuid, String senderUuid, String receiverUuid, String content) {
-        this.roomUuid = roomUuid;
-        this.senderUuid = senderUuid;
-        this.receiverUuid = receiverUuid;
+    public ChatMessageServerRequest(long roomId, long senderId, long receiverId, String content) {
+        this.roomId = roomId;
+        this.senderId = senderId;
+        this.receiverId = receiverId;
         this.content = content;
     }
 
-    public static ChatMessageServerRequest of(String roomUuid, String senderUuid, String receiverUuid, String content){
+    public static ChatMessageServerRequest of(long roomId, long senderId, long receiverId, String content){
         return ChatMessageServerRequest.builder()
-                                       .roomUuid(roomUuid)
-                                       .senderUuid(senderUuid)
-                                       .receiverUuid(receiverUuid)
+                                       .roomId(roomId)
+                                       .senderId(senderId)
+                                       .receiverId(receiverId)
                                        .content(content)
                                        .build();
     }

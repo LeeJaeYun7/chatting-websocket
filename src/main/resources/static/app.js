@@ -1,4 +1,4 @@
-const jwtToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkYTA5ZGI0Mi04YWE0LTRlNjMtYmIyZC1lYzZkMzZkNmEwMjciLCJpYXQiOjE3NDM5NTE5NDksImV4cCI6MTc0Mzk1NTU0OX0.pJCuyx_L1KeV3Z-M0_mYc7BIvIg3-7QSQ5SyOsTKqrx7Xz-47IA4Rq7zIcRwne458rgHNVDk0DUpFEb5cNiW5A"
+const jwtToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDc0NTk2ODg1NDE5NTA1ODE0IiwiaWF0IjoxNzQ0MDEwMTMxLCJleHAiOjE3NDQwMTM3MzF9.QCWyPZUeMlQIPG0p0DcoBqkCoujaCiDdp-urhGLHfb26LLfDLIU23ti-K8eBB7GoBWcQyUYAS6TdHi1cOYjkvA"
 
 const stompClient = new StompJs.Client({
     brokerURL: 'ws://localhost:8081/gs-guide-websocket',
@@ -49,10 +49,9 @@ function disconnect() {
 
 function sendChatMessage() {
      const messageData = {
-         roomUuid: $("#roomId").val(),
-         receiverUuid: 'b7f8937b-6fa6-427d-a236-aea67af259f4',
-         content: $("#chatMessage").val(),
-         jwtToken: jwtToken
+         roomId: $("#roomId").val(),
+         receiverId: 1074952267225452259,
+         content: $("#chatMessage").val()
      };
 
      console.log("Sending message:", messageData);  // 메시지 데이터 확인

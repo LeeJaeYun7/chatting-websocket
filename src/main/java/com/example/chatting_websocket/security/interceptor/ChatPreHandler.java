@@ -28,6 +28,8 @@ public class ChatPreHandler implements ChannelInterceptor {
                 token = token.substring(7);
                 try {
                     jwtProvider.validateToken(token);
+                    String memberId = jwtProvider.getMemberId(token);
+                    accessor.getSessionAttributes().put("AUTHENTICATED_MEMBER_ID", memberId);
                 } catch (Exception e) {
                     log.error("토큰 유효하지 않음 or 실패", e);
                     return null;
