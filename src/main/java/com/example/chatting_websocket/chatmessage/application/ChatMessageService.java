@@ -11,7 +11,7 @@ public class ChatMessageService {
 
     private final ChatMessageClient chatMessageClient;
 
-    public void sendChatMessage(long roomId, long senderId, long receiverId, String content) {
+    public void sendChatMessage(String roomId, String senderId, String receiverId, String content) {
         ChatMessageServerRequest request = ChatMessageServerRequest.of(roomId, senderId, receiverId, content);
         chatMessageClient.sendChatMessage(request);
     }

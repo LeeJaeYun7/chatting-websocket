@@ -8,20 +8,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ChatMessageServerRequest {
 
-    private long roomId;     // 어떤 채팅방에 보낸 건지
-    private long senderId;
-    private long receiverId;
+    private String roomId;     // 어떤 채팅방에 보낸 건지
+    private String senderId;
+    private String receiverId;
     private String content;    // 메시지 내용
 
     @Builder
-    public ChatMessageServerRequest(long roomId, long senderId, long receiverId, String content) {
+    public ChatMessageServerRequest(String roomId, String senderId, String receiverId, String content) {
         this.roomId = roomId;
         this.senderId = senderId;
         this.receiverId = receiverId;
         this.content = content;
     }
 
-    public static ChatMessageServerRequest of(long roomId, long senderId, long receiverId, String content){
+    public static ChatMessageServerRequest of(String roomId, String senderId, String receiverId, String content){
         return ChatMessageServerRequest.builder()
                                        .roomId(roomId)
                                        .senderId(senderId)

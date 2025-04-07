@@ -1,5 +1,4 @@
-const jwtToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDc0NTk2ODg1NDE5NTA1ODE0IiwiaWF0IjoxNzQ0MDEwMTMxLCJleHAiOjE3NDQwMTM3MzF9.QCWyPZUeMlQIPG0p0DcoBqkCoujaCiDdp-urhGLHfb26LLfDLIU23ti-K8eBB7GoBWcQyUYAS6TdHi1cOYjkvA"
-
+const jwtToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDc0NTk2ODg1NDE5NTA1ODE0IiwiaWF0IjoxNzQ0MDQ1NDg1LCJleHAiOjE3NDQwNDkwODV9.h0iw3DFRQoXQNOJbVJ1Z8sXxPSjW2Xiz82tUARk1me3VZauweendbUyssNcv4L6qzx4VBfqdPAWYrQBmJYVoqQ"
 const stompClient = new StompJs.Client({
     brokerURL: 'ws://localhost:8081/gs-guide-websocket',
     connectHeaders: {
@@ -12,6 +11,10 @@ stompClient.onConnect = (frame) => {
     console.log('Connected: ' + frame);
 
     stompClient.subscribe('/topic/chatMessage', (response) => {
+         console.log('Response body: ', response.body);
+    });
+
+    stompClient.subscribe('/user/topic/chatMessage', (response) => {
          console.log('Response body: ', response.body);
     });
 };
@@ -50,7 +53,7 @@ function disconnect() {
 function sendChatMessage() {
      const messageData = {
          roomId: $("#roomId").val(),
-         receiverId: 1074952267225452259,
+         receiverId: '1074713305383089418',
          content: $("#chatMessage").val()
      };
 
