@@ -8,17 +8,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ChatMessageRequest {
 
-    private long roomId;     // 어떤 채팅방에 보낸 건지
-    private long receiverId; // 메시지 보내는 대상
+    private String roomId;     // 어떤 채팅방에 보낸 건지
+    private String receiverId; // 메시지 보내는 대상
     private String content;    // 메시지 내용
-    private String jwtToken;   // jwt 토큰
 
     @Builder
-    public ChatMessageRequest(long roomId, long receiverId, String content, String jwtToken) {
+    public ChatMessageRequest(String roomId, String receiverId, String content) {
         this.roomId = roomId;
         this.receiverId = receiverId;
         this.content = content;
-        this.jwtToken = jwtToken;
     }
 
     public boolean isContentLengthValid() {

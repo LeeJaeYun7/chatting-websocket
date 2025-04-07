@@ -1,6 +1,8 @@
 package com.example.chatting_websocket.security.interceptor;
 
 import com.example.chatting_websocket.security.jwt.JwtProvider;
+import com.example.chatting_websocket.websocket.infrastructure.dao.WebSocketIpDAO;
+import com.example.chatting_websocket.websocket.infrastructure.dao.WebSocketSessionDAO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.Message;
@@ -16,6 +18,9 @@ import org.springframework.stereotype.Component;
 public class ChatPreHandler implements ChannelInterceptor {
 
     private final JwtProvider jwtProvider;
+    private final WebSocketSessionDAO webSocketSessionDAO;
+    private final WebSocketIpDAO webSocketIpDAO;
+
 
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
@@ -29,7 +34,12 @@ public class ChatPreHandler implements ChannelInterceptor {
                 try {
                     jwtProvider.validateToken(token);
                     String memberId = jwtProvider.getMemberId(token);
+                    String sessionId = accessor.getUser().getName(); // 세션 ID 추출
+
                     accessor.getSessionAttributes().put("AUTHENTICATED_MEMBER_ID", memberId);
+
+                    webSocketSessionDAO.saveWebSocketSession(memberId, sessionId);
+                    webSocketIpDAO.saveWebSocketIp(Long.parseLong(memberId));
                 } catch (Exception e) {
                     log.error("토큰 유효하지 않음 or 실패", e);
                     return null;
