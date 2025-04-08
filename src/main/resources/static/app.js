@@ -1,4 +1,5 @@
-const jwtToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDc0NTk2ODg1NDE5NTA1ODE0IiwiaWF0IjoxNzQ0MTM1NDczLCJleHAiOjE3NDQxMzkwNzN9.PSkzbtK1hCzPIiZV7Nvrc3yc9QTyR_k3AsFBVfzB5OcCsPQgCPinFwORZUOgk4D5lx1BrAKqBmneYdNDoC25dg"
+const jwtToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDc0NzEzMzA1MzgzMDg5NDE4IiwiaWF0IjoxNzQ0MTM1MzQ2LCJleHAiOjE3NDQxMzg5NDZ9.935H4GQp8IKkQfiATBXmh5HUCUZtP4a_avFhnZNr_XFbUXEz9s8JTp_ZdQzR03XrfHBGVQVQj61z53cEZccgzg"
+
 const stompClient = new StompJs.Client({
     brokerURL: 'ws://localhost:8081/gs-guide-websocket',
     connectHeaders: {
@@ -16,6 +17,8 @@ stompClient.onConnect = (frame) => {
 
     stompClient.subscribe('/user/topic/chatMessage/oneOnOne', (response) => {
          console.log('Response body: ', response.body);
+         const message = JSON.parse(response.body);
+         showMessage(message.content);
     });
 
     stompClient.subscribe('/topic/chatMessage/group', (response) => {
@@ -87,13 +90,10 @@ function sendGroupChatMessage() {
      });
 }
 
-function showToken(token) {
-    $("#tokens").append("<tr><td>Token: " + token + "</td></tr>");
+function showMessage(message) {
+    $("#messages").append("<tr><td>" + message + "</td></tr>");
 }
 
-function showRank(rank) {
-    $("#ranks").append("<tr><td>waitingRank: " + rank + "</td></tr>");
-}
 
 $(function () {
     $("form").on('submit', (e) => e.preventDefault());

@@ -14,10 +14,10 @@ public class WebSocketClientMessageSender {
     private final SimpMessagingTemplate messagingTemplate;
 
     public void sendOneOnOneChatMessageToClient(String sessionId, OneOnOneChatMessageResponse response) {
-        messagingTemplate.convertAndSendToUser(sessionId, WebSocketInfo.CHAT_MESSAGE_DESTINATION, response);
+        messagingTemplate.convertAndSendToUser(sessionId, WebSocketInfo.ONE_ON_ONE_CHAT_MESSAGE_DESTINATION, response);
     }
 
     public void sendGroupChatMessageToClient(String sessionId, GroupChatMessageResponse response) {
-        messagingTemplate.convertAndSendToUser(sessionId, WebSocketInfo.CHAT_MESSAGE_DESTINATION, response);
+        messagingTemplate.convertAndSendToUser(sessionId, WebSocketInfo.GROUP_CHAT_MESSAGE_DESTINATION, response);
     }
 }
