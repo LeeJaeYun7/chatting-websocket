@@ -11,11 +11,11 @@ import java.net.UnknownHostException;
 
 @Component
 @RequiredArgsConstructor
-public class WebSocketIpDAO {
+public class WebSocketMemberIpDAO {
 
     private final RedissonClient redissonClient;
 
-    public void saveWebSocketIp(long memberId) throws UnknownHostException {
+    public void saveMemberIp(long memberId) throws UnknownHostException {
         String ipAddress = getIpAddress();
         RMapCache<String, String> ipMap = redissonClient.getMapCache(RedisKey.WEBSOCKET_IP_KEY);
         ipMap.put(String.valueOf(memberId), ipAddress);
