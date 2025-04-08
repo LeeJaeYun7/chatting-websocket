@@ -23,12 +23,21 @@
         <div class="col-md-6">
             <form class="form-inline">
                 <div class="form-group">
-                    <label for="chatMessage">Chat Window</label>
-                    <input type="text" id="roomId" class="form-control" placeholder="Enter your roomId">
-                    <input type="text" id="chatMessage" class="form-control" placeholder="Enter your chat message">
+                    <label for="oneOnOneChatMessage">1:1 Chat Room</label>
+                    <input type="text" id="oneOnOneRoomId" class="form-control" placeholder="Enter your roomId">
+                    <input type="text" id="oneOnOneChatMessage" class="form-control" placeholder="Enter your chat message">
                 </div>
-                <button id="sendChatMessage" class="btn btn-default" type="submit">Send</button>
+                <button id="sendOneOnOneChatMessage" class="btn btn-default" type="submit">Send</button>
             </form>
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="groupChatMessage">GroupChat Room</label>
+                    <input type="text" id="groupRoomId" class="form-control" placeholder="Enter your roomId">
+                    <input type="text" id="groupChatMessage" class="form-control" placeholder="Enter your chat message">
+                </div>
+                <button id="sendGroupChatMessage" class="btn btn-default" type="submit">Send</button>
+            </form>
+        </div>
         </div>
     </div>
     <div class="row">

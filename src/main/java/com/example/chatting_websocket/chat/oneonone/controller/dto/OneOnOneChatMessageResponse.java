@@ -1,4 +1,4 @@
-package com.example.chatting_websocket.chatmessage.controller.dto;
+package com.example.chatting_websocket.chat.oneonone.controller.dto;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Getter
-public class ChatMessageResponse {
+public class OneOnOneChatMessageResponse {
 
     private String roomId;
     private String senderId;
@@ -17,7 +17,7 @@ public class ChatMessageResponse {
     private LocalDateTime timestamp;
 
     @Builder
-    public ChatMessageResponse(String roomId, String senderId, String receiverId, String content, LocalDateTime timestamp) {
+    public OneOnOneChatMessageResponse(String roomId, String senderId, String receiverId, String content, LocalDateTime timestamp) {
         this.roomId = roomId;
         this.senderId = senderId;
         this.receiverId = receiverId;
@@ -25,8 +25,8 @@ public class ChatMessageResponse {
         this.timestamp = timestamp;
     }
 
-    public static ChatMessageResponse of(String roomId, String senderId, String receiverId, String content, LocalDateTime timestamp) {
-        return ChatMessageResponse.builder()
+    public static OneOnOneChatMessageResponse of(String roomId, String senderId, String receiverId, String content, LocalDateTime timestamp) {
+        return OneOnOneChatMessageResponse.builder()
                                   .roomId(roomId)
                                   .senderId(senderId)
                                   .receiverId(receiverId)

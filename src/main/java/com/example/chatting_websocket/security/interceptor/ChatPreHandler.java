@@ -1,8 +1,10 @@
 package com.example.chatting_websocket.security.interceptor;
 
 import com.example.chatting_websocket.security.jwt.JwtProvider;
-import com.example.chatting_websocket.websocket.infrastructure.dao.WebSocketIpDAO;
-import com.example.chatting_websocket.websocket.infrastructure.dao.WebSocketSessionDAO;
+import com.example.chatting_websocket.websocket.infrastructure.SessionManager;
+import com.example.chatting_websocket.websocket.infrastructure.dao.WebSocketIpSessionDAO;
+import com.example.chatting_websocket.websocket.infrastructure.dao.WebSocketMemberIpDAO;
+import com.example.chatting_websocket.websocket.infrastructure.dao.WebSocketMemberSessionDAO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.Message;
@@ -18,9 +20,10 @@ import org.springframework.stereotype.Component;
 public class ChatPreHandler implements ChannelInterceptor {
 
     private final JwtProvider jwtProvider;
-    private final WebSocketSessionDAO webSocketSessionDAO;
-    private final WebSocketIpDAO webSocketIpDAO;
-
+    private final WebSocketMemberSessionDAO webSocketMemberSessionDAO;
+    private final WebSocketMemberIpDAO webSocketMemberIpDAO;
+    private final WebSocketIpSessionDAO webSocketIpSessionDAO;
+    private final SessionManager sessionManager;
 
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
@@ -38,8 +41,10 @@ public class ChatPreHandler implements ChannelInterceptor {
 
                     accessor.getSessionAttributes().put("AUTHENTICATED_MEMBER_ID", memberId);
 
-                    webSocketSessionDAO.saveWebSocketSession(memberId, sessionId);
-                    webSocketIpDAO.saveWebSocketIp(Long.parseLong(memberId));
+                    webSocketMemberSessionDAO.saveWebSocketSession(memberId, sessionId);
+                    webSocketMemberIpDAO.saveMemberIp(Long.parseLong(memberId));
+                    webSocketIpSessionDAO.saveIpSession(sessionId);
+                    sessionManager.saveSession(sessionId);
                 } catch (Exception e) {
                     log.error("토큰 유효하지 않음 or 실패", e);
                     return null;
