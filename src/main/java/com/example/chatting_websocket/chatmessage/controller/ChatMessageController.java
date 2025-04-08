@@ -22,9 +22,9 @@ public class ChatMessageController {
         }
         String roomId = chatMessageRequest.getRoomId();
         String senderId = headerAccessor.getSessionAttributes().get("AUTHENTICATED_MEMBER_ID").toString();
-        String receiverId = chatMessageRequest.getReceiverId();
+        String roomType = chatMessageRequest.getRoomType();
 
         String content = chatMessageRequest.getContent();
-        chatMessageService.sendChatMessage(roomId, senderId, receiverId, content);
+        chatMessageService.sendChatMessage(roomId, senderId, content, roomType);
     }
 }

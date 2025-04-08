@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(name= "chatMessageClient", url = "${chatting.server.url}")
 public interface ChatMessageClient {
-    @PostMapping("/api/v1/chatMessage")
-    void sendChatMessage(@RequestBody ChatMessageServerRequest request);
+    @PostMapping("/api/v1/chatMessage/oneOnOne")
+    void sendOneOnOneChatMessage(@RequestBody ChatMessageServerRequest request);
+
+    @PostMapping("/api/v1/chatMessage/group")
+    void sendGroupChatMessage(@RequestBody ChatMessageServerRequest request);
 }

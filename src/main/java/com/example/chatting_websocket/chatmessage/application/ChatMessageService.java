@@ -11,9 +11,14 @@ public class ChatMessageService {
 
     private final ChatMessageClient chatMessageClient;
 
-    public void sendChatMessage(String roomId, String senderId, String receiverId, String content) {
-        ChatMessageServerRequest request = ChatMessageServerRequest.of(roomId, senderId, receiverId, content);
-        chatMessageClient.sendChatMessage(request);
+    public void sendChatMessage(String roomId, String senderId, String content, String roomType) {
+        ChatMessageServerRequest request = ChatMessageServerRequest.of(roomId, senderId, content);
+
+        if(roomType.equals("oneOnOne")){
+            chatMessageClient.sendOneOnOneChatMessage(request);
+        }
+
+        chatMessageClient.sendGroupChatMessage(request);
     }
 }
 

@@ -53,8 +53,8 @@ function disconnect() {
 function sendChatMessage() {
      const messageData = {
          roomId: $("#roomId").val(),
-         receiverId: '1074713305383089418',
-         content: $("#chatMessage").val()
+         content: $("#chatMessage").val(),
+         roomType: 'oneOnOne'
      };
 
      console.log("Sending message:", messageData);  // 메시지 데이터 확인
