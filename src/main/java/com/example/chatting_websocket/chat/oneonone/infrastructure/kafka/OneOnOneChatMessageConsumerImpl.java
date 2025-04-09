@@ -5,9 +5,8 @@ import com.example.chatting_websocket.chat.oneonone.domain.event.OneOnOneChatMes
 import com.example.chatting_websocket.chat.oneonone.domain.event.OneOnOneChatMessageEvent;
 import com.example.chatting_websocket.chat.oneonone.domain.event.enums.OneOnOneChatMessageConst;
 import com.example.chatting_websocket.shared.utils.JsonConverter;
-import com.example.chatting_websocket.websocket.infrastructure.SessionManager;
 import com.example.chatting_websocket.websocket.infrastructure.WebSocketClientMessageSender;
-import com.example.chatting_websocket.websocket.infrastructure.dao.WebSocketMemberSessionDAO;
+import com.example.chatting_websocket.websocket.infrastructure.redis.WebSocketMemberSessionDAO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.TopicPartition;
@@ -20,7 +19,6 @@ public class OneOnOneChatMessageConsumerImpl implements OneOnOneChatMessageConsu
     private final JsonConverter jsonConverter;
     private final WebSocketMemberSessionDAO webSocketMemberSessionDAO;
     private final WebSocketClientMessageSender webSocketClientMessageSender;
-    private final SessionManager sessionManager;
 
     @KafkaListener(
             topics = OneOnOneChatMessageConst.CHAT_MESSAGE_TOPIC,

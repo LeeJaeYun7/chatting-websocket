@@ -2,6 +2,7 @@ package com.example.chatting_websocket.websocket.infrastructure;
 
 import com.example.chatting_websocket.chat.group.controller.dto.GroupChatMessageResponse;
 import com.example.chatting_websocket.chat.oneonone.controller.dto.OneOnOneChatMessageResponse;
+import com.example.chatting_websocket.member.controller.dto.MemberStatusNotificationResponse;
 import com.example.chatting_websocket.websocket.infrastructure.enums.WebSocketInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -19,5 +20,9 @@ public class WebSocketClientMessageSender {
 
     public void sendGroupChatMessageToClient(String sessionId, GroupChatMessageResponse response) {
         messagingTemplate.convertAndSendToUser(sessionId, WebSocketInfo.GROUP_CHAT_MESSAGE_DESTINATION, response);
+    }
+
+    public void sendMemberStatusNotificationToClient(String sessionId, MemberStatusNotificationResponse response) {
+        messagingTemplate.convertAndSendToUser(sessionId, WebSocketInfo.MEMBER_STATUS_DESTINATION, response);
     }
 }

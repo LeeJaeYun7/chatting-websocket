@@ -1,10 +1,11 @@
 package com.example.chatting_websocket.security.interceptor;
 
+import com.example.chatting_websocket.member.domain.event.MemberStatusEventProducer;
 import com.example.chatting_websocket.security.jwt.JwtProvider;
 import com.example.chatting_websocket.websocket.infrastructure.SessionManager;
-import com.example.chatting_websocket.websocket.infrastructure.dao.WebSocketIpSessionDAO;
-import com.example.chatting_websocket.websocket.infrastructure.dao.WebSocketMemberIpDAO;
-import com.example.chatting_websocket.websocket.infrastructure.dao.WebSocketMemberSessionDAO;
+import com.example.chatting_websocket.websocket.infrastructure.redis.WebSocketIpSessionDAO;
+import com.example.chatting_websocket.websocket.infrastructure.redis.WebSocketMemberIpDAO;
+import com.example.chatting_websocket.websocket.infrastructure.redis.WebSocketMemberSessionDAO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.Message;
@@ -25,6 +26,8 @@ public class ChatPreHandler implements ChannelInterceptor {
     private final WebSocketIpSessionDAO webSocketIpSessionDAO;
     private final SessionManager sessionManager;
 
+    private final MemberStatusEventProducer memberStatusEventProducer;
+
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
@@ -44,7 +47,9 @@ public class ChatPreHandler implements ChannelInterceptor {
                     webSocketMemberSessionDAO.saveWebSocketSession(memberId, sessionId);
                     webSocketMemberIpDAO.saveMemberIp(Long.parseLong(memberId));
                     webSocketIpSessionDAO.saveIpSession(sessionId);
-                    sessionManager.saveSession(sessionId);
+                    sessionManager.saveSession(memberId, sessionId);
+
+                    memberStatusEventProducer.sendMemberStatusChangeEvent(memberId, true);
                 } catch (Exception e) {
                     log.error("토큰 유효하지 않음 or 실패", e);
                     return null;

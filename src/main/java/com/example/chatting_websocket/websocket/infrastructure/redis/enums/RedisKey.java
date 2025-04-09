@@ -1,8 +1,7 @@
-package com.example.chatting_websocket.websocket.infrastructure.dao.enums;
+package com.example.chatting_websocket.websocket.infrastructure.redis.enums;
 
 public interface RedisKey {
     String WEBSOCKET_SESSION_KEY = "webSocketSession";
     String WEBSOCKET_IP_KEY = "webSocketIp";
-
     String WEBSOCKET_IP_SESSION_KEY = "webSocketIpSession";
  }

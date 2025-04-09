@@ -11,18 +11,22 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SessionManager {
 
     // 세션 ID를 key로만 저장, Set처럼 활용
-    private final Map<String, Boolean> sessionMap = new ConcurrentHashMap<>();
+    private final Map<String, String> sessionMap = new ConcurrentHashMap<>();
 
-    public void saveSession(String sessionId) {
-        sessionMap.put(sessionId, true); // 중복 방지됨
+    public void saveSession(String memberId, String sessionId) {
+        sessionMap.put(memberId, sessionId); // 중복 방지됨
     }
 
-    public void removeSession(String sessionId) {
-        sessionMap.remove(sessionId);
+    public void removeSession(String memberId) {
+        sessionMap.remove(memberId);
     }
 
-    public boolean containsSession(String sessionId) {
-        return sessionMap.containsKey(sessionId);
+    public boolean containsSession(String memberId) {
+        return sessionMap.containsKey(memberId);
+    }
+
+    public String getSession(String memberId){
+        return sessionMap.get(memberId);
     }
 }
 
