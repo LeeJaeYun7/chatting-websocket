@@ -2,9 +2,7 @@ package com.example.chatting_websocket.security.interceptor;
 
 import com.example.chatting_websocket.member.domain.event.MemberStatusEventProducer;
 import com.example.chatting_websocket.security.jwt.JwtProvider;
-import com.example.chatting_websocket.websocket.infrastructure.SessionManager;
-import com.example.chatting_websocket.websocket.infrastructure.redis.WebSocketIpSessionDAO;
-import com.example.chatting_websocket.websocket.infrastructure.redis.WebSocketMemberIpDAO;
+import com.example.chatting_websocket.websocket.infrastructure.inmemory.SessionManager;
 import com.example.chatting_websocket.websocket.infrastructure.redis.WebSocketMemberSessionDAO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,8 +20,6 @@ public class ChatPreHandler implements ChannelInterceptor {
 
     private final JwtProvider jwtProvider;
     private final WebSocketMemberSessionDAO webSocketMemberSessionDAO;
-    private final WebSocketMemberIpDAO webSocketMemberIpDAO;
-    private final WebSocketIpSessionDAO webSocketIpSessionDAO;
     private final SessionManager sessionManager;
 
     private final MemberStatusEventProducer memberStatusEventProducer;
@@ -45,8 +41,6 @@ public class ChatPreHandler implements ChannelInterceptor {
                     accessor.getSessionAttributes().put("AUTHENTICATED_MEMBER_ID", memberId);
 
                     webSocketMemberSessionDAO.saveWebSocketSession(memberId, sessionId);
-                    webSocketMemberIpDAO.saveMemberIp(Long.parseLong(memberId));
-                    webSocketIpSessionDAO.saveIpSession(sessionId);
                     sessionManager.saveSession(memberId, sessionId);
 
                     memberStatusEventProducer.sendMemberStatusChangeEvent(memberId, true);

@@ -1,7 +1,7 @@
 package com.example.chatting_websocket.config;
 
 import com.example.chatting_websocket.security.interceptor.ChatPreHandler;
-import com.example.chatting_websocket.websocket.infrastructure.CustomHandshakeHandler;
+import com.example.chatting_websocket.websocket.infrastructure.auth.CustomHandshakeHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

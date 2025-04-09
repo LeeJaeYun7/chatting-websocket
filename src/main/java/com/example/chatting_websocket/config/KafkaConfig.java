@@ -1,4 +1,4 @@
-package com.example.chatting_websocket.config.kafka;
+package com.example.chatting_websocket.config;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;

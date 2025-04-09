@@ -1,6 +1,5 @@
-package com.example.chatting_websocket.websocket.infrastructure;
+package com.example.chatting_websocket.websocket.infrastructure.auth;
 
-import com.example.chatting_websocket.websocket.infrastructure.auth.StompPrincipal;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.web.socket.WebSocketHandler;

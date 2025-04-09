@@ -27,11 +27,11 @@ public class OneOnOneChatMessageResponse {
 
     public static OneOnOneChatMessageResponse of(String roomId, String senderId, String receiverId, String content, LocalDateTime timestamp) {
         return OneOnOneChatMessageResponse.builder()
-                                  .roomId(roomId)
-                                  .senderId(senderId)
-                                  .receiverId(receiverId)
-                                  .content(content)
-                                  .timestamp(timestamp)
-                                  .build();
+                                          .roomId(roomId)
+                                          .senderId(senderId)
+                                          .receiverId(receiverId)
+                                          .content(content)
+                                          .timestamp(timestamp)
+                                          .build();
     }
 }

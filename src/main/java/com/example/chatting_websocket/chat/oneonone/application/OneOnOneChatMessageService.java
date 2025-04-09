@@ -1,7 +1,7 @@
 package com.example.chatting_websocket.chat.oneonone.application;
 
-import com.example.chatting_websocket.chat.oneonone.application.feign.OneOnOneChatMessageClient;
-import com.example.chatting_websocket.chat.oneonone.controller.dto.OneOnOneChatMessageServerRequest;
+import com.example.chatting_websocket.chat.oneonone.domain.event.OneOnOneChatMessageProducer;
+import com.example.chatting_websocket.chat.oneonone.domain.event.OneOnOneChatMessageServerEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class OneOnOneChatMessageService {
 
-    private final OneOnOneChatMessageClient oneOnOneChatMessageClient;
+    private final OneOnOneChatMessageProducer oneOnOneChatMessageProducer;
 
     public void sendOneOnOneChatMessage(String roomId, String senderId, String content) {
-        OneOnOneChatMessageServerRequest request = OneOnOneChatMessageServerRequest.of(roomId, senderId, content);
-        oneOnOneChatMessageClient.sendOneOnOneChatMessage(request);
+        OneOnOneChatMessageServerEvent event = OneOnOneChatMessageServerEvent.of(roomId, senderId, content);
+        oneOnOneChatMessageProducer.sendOneOnOneChatMessage(event);
     }
 }
 

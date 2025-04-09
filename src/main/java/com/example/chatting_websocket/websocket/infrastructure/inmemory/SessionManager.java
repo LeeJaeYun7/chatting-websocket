@@ -1,4 +1,4 @@
-package com.example.chatting_websocket.websocket.infrastructure;
+package com.example.chatting_websocket.websocket.infrastructure.inmemory;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
