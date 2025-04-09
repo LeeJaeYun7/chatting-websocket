@@ -1,6 +1,7 @@
 package com.example.chatting_websocket.security.interceptor;
 
 import com.example.chatting_websocket.security.jwt.JwtProvider;
+import com.example.chatting_websocket.websocket.domain.event.MemberStatusEventProducer;
 import com.example.chatting_websocket.websocket.infrastructure.SessionManager;
 import com.example.chatting_websocket.websocket.infrastructure.dao.WebSocketIpSessionDAO;
 import com.example.chatting_websocket.websocket.infrastructure.dao.WebSocketMemberIpDAO;
@@ -25,6 +26,8 @@ public class ChatPreHandler implements ChannelInterceptor {
     private final WebSocketIpSessionDAO webSocketIpSessionDAO;
     private final SessionManager sessionManager;
 
+    private final MemberStatusEventProducer memberStatusEventProducer;
+
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
@@ -45,6 +48,8 @@ public class ChatPreHandler implements ChannelInterceptor {
                     webSocketMemberIpDAO.saveMemberIp(Long.parseLong(memberId));
                     webSocketIpSessionDAO.saveIpSession(sessionId);
                     sessionManager.saveSession(sessionId);
+
+                    memberStatusEventProducer.sendMemberStatusEvent(memberId, true);
                 } catch (Exception e) {
                     log.error("토큰 유효하지 않음 or 실패", e);
                     return null;

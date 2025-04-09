@@ -20,7 +20,6 @@ public class OneOnOneChatMessageConsumerImpl implements OneOnOneChatMessageConsu
     private final JsonConverter jsonConverter;
     private final WebSocketMemberSessionDAO webSocketMemberSessionDAO;
     private final WebSocketClientMessageSender webSocketClientMessageSender;
-    private final SessionManager sessionManager;
 
     @KafkaListener(
             topics = OneOnOneChatMessageConst.CHAT_MESSAGE_TOPIC,
