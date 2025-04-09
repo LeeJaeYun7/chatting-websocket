@@ -1,25 +1,24 @@
-package com.example.chatting_websocket.websocket.domain.event;
+package com.example.chatting_websocket.member.domain.event;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import lombok.Builder;
-
 @Getter
 @NoArgsConstructor
-public class MemberStatusEvent {
+public class MemberStatusChangeEvent {
 
     private String memberId;
     private boolean isOnline;
 
     @Builder
-    public MemberStatusEvent(String memberId, boolean isOnline) {
+    public MemberStatusChangeEvent(String memberId, boolean isOnline) {
         this.memberId = memberId;
         this.isOnline = isOnline;
     }
 
-    public static MemberStatusEvent of(String memberId, boolean isOnline) {
-        return MemberStatusEvent.builder()
+    public static MemberStatusChangeEvent of(String memberId, boolean isOnline) {
+        return MemberStatusChangeEvent.builder()
                 .memberId(memberId)
                 .isOnline(isOnline)
                 .build();

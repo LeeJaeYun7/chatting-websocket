@@ -1,4 +1,4 @@
-const jwtToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDc0NzEzMzA1MzgzMDg5NDE4IiwiaWF0IjoxNzQ0MTM1MzQ2LCJleHAiOjE3NDQxMzg5NDZ9.935H4GQp8IKkQfiATBXmh5HUCUZtP4a_avFhnZNr_XFbUXEz9s8JTp_ZdQzR03XrfHBGVQVQj61z53cEZccgzg"
+const jwtToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDc0NTk2ODg1NDE5NTA1ODE0IiwiaWF0IjoxNzQ0MTg5MTI5LCJleHAiOjE3NDQxOTI3Mjl9.WDMNmiD0JMoY2CGzox8-mLl7AO5KfC_7QPgJLuZp8RJN3cPGr7LOFBv0afwuINKWZ48zqnHx_kDUHbWCSb5wWQ"
 
 const stompClient = new StompJs.Client({
     brokerURL: 'ws://localhost:8081/gs-guide-websocket',
@@ -22,11 +22,13 @@ stompClient.onConnect = (frame) => {
     });
 
     stompClient.subscribe('/topic/chatMessage/group', (response) => {
-             console.log('Response body: ', response.body);
+         console.log('Response body: ', response.body);
     });
 
     stompClient.subscribe('/user/topic/chatMessage/group', (response) => {
-             console.log('Response body: ', response.body);
+         console.log('Response body: ', response.body);
+         const message = JSON.parse(response.body);
+         showMessage(message.content);
     });
 };
 
@@ -107,6 +109,6 @@ $(function () {
 
     $("#sendGroupChatMessage").click( () => {
         console.log("sendGroupChatMessage button clicked");
-        sendOneOnOneChatMessage()
+        sendGroupChatMessage()
     });
 });

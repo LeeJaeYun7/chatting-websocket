@@ -7,7 +7,7 @@ import com.example.chatting_websocket.chat.group.domain.event.enums.GroupChatMes
 import com.example.chatting_websocket.shared.utils.JsonConverter;
 import com.example.chatting_websocket.websocket.infrastructure.SessionManager;
 import com.example.chatting_websocket.websocket.infrastructure.WebSocketClientMessageSender;
-import com.example.chatting_websocket.websocket.infrastructure.dao.WebSocketMemberSessionDAO;
+import com.example.chatting_websocket.websocket.infrastructure.redis.WebSocketMemberSessionDAO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
@@ -32,9 +32,9 @@ public class GroupChatMessageConsumerImpl implements GroupChatMessageConsumer {
         GroupChatMessageResponse response = GroupChatMessageResponse.of(event.getRoomId(), event.getSenderId(), event.getContent(), event.getTimestamp());
 
         List<Long> participantIds = event.getParticipantIds()
-                .stream()
-                .map(Long::parseLong)  // String을 Long으로 변환
-                .toList();
+                                         .stream()
+                                         .map(Long::parseLong)  // String을 Long으로 변환
+                                         .toList();
 
         for(long participantId: participantIds){
             String sessionId = webSocketMemberSessionDAO.getWebSocketSession(String.valueOf(participantId));

@@ -1,8 +1,8 @@
-package com.example.chatting_websocket.websocket.infrastructure.dao;
+package com.example.chatting_websocket.websocket.infrastructure.redis;
 
-import com.example.chatting_websocket.websocket.infrastructure.dao.enums.RedisKey;
+import com.example.chatting_websocket.websocket.infrastructure.redis.enums.RedisKey;
 import lombok.RequiredArgsConstructor;
-import org.redisson.api.RList;
+import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Component;
 
@@ -11,14 +11,14 @@ import java.net.UnknownHostException;
 
 @Component
 @RequiredArgsConstructor
-public class WebSocketIpSessionDAO {
+public class WebSocketMemberIpDAO {
 
     private final RedissonClient redissonClient;
 
-    public void saveIpSession(String sessionId) throws UnknownHostException {
+    public void saveMemberIp(long memberId) throws UnknownHostException {
         String ipAddress = getIpAddress();
-        RList<String> sessionList = redissonClient.getList(RedisKey.WEBSOCKET_IP_SESSION_KEY + ipAddress);
-        sessionList.add(sessionId);
+        RMapCache<String, String> ipMap = redissonClient.getMapCache(RedisKey.WEBSOCKET_IP_KEY);
+        ipMap.put(String.valueOf(memberId), ipAddress);
     }
 
     public String getIpAddress() throws UnknownHostException{

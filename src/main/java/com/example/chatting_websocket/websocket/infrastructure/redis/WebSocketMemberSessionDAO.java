@@ -1,6 +1,6 @@
-package com.example.chatting_websocket.websocket.infrastructure.dao;
+package com.example.chatting_websocket.websocket.infrastructure.redis;
 
-import com.example.chatting_websocket.websocket.infrastructure.dao.enums.RedisKey;
+import com.example.chatting_websocket.websocket.infrastructure.redis.enums.RedisKey;
 import lombok.RequiredArgsConstructor;
 import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;

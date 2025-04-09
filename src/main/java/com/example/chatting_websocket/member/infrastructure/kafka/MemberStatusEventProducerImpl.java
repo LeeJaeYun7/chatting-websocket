@@ -1,10 +1,10 @@
-package com.example.chatting_websocket.websocket.infrastructure.kafka;
+package com.example.chatting_websocket.member.infrastructure.kafka;
 
-import com.example.chatting_websocket.config.KafkaConfig;
+import com.example.chatting_websocket.config.kafka.KafkaConfig;
+import com.example.chatting_websocket.member.domain.event.MemberStatusChangeEvent;
+import com.example.chatting_websocket.member.domain.event.MemberStatusEventProducer;
+import com.example.chatting_websocket.member.infrastructure.kafka.enums.MemberStatusEventTopics;
 import com.example.chatting_websocket.shared.utils.JsonConverter;
-import com.example.chatting_websocket.websocket.domain.event.MemberStatusEvent;
-import com.example.chatting_websocket.websocket.domain.event.MemberStatusEventProducer;
-import com.example.chatting_websocket.websocket.domain.event.enums.MemberStatusConst;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
@@ -28,11 +28,11 @@ public class MemberStatusEventProducerImpl implements MemberStatusEventProducer 
         this.producer = new KafkaProducer<>(kafkaConfig.kafkaProducerConfig());
     }
 
-    public void sendMemberStatusEvent(String memberId, boolean isOnline) {
-        MemberStatusEvent event = MemberStatusEvent.of(memberId, isOnline);
+    public void sendMemberStatusChangeEvent(String memberId, boolean isOnline) {
+        MemberStatusChangeEvent event = MemberStatusChangeEvent.of(memberId, isOnline);
         String eventJson = jsonConverter.convertToJson(event);
 
-        ProducerRecord<String, String> record = new ProducerRecord<>(MemberStatusConst.MEMBER_STATUS_TOPIC, memberId, eventJson);
+        ProducerRecord<String, String> record = new ProducerRecord<>(MemberStatusEventTopics.MEMBER_STATUS_TOPIC, memberId, eventJson);
         producer.send(record);
     }
 
