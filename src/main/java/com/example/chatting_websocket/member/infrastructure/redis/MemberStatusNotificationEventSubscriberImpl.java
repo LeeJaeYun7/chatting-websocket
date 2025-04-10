@@ -35,7 +35,8 @@ public class MemberStatusNotificationEventSubscriberImpl implements MemberNotifi
         }
     }
 
-    private void startMemberStatusEventChannelListening() {
+    @Override
+    public void startMemberStatusEventChannelListening() {
         // Redis 채널을 구독하기 위한 RTopic 객체
         RTopic topic = redissonClient.getTopic(RedisKey.MEMBER_STATUS_CHANNEL);
 

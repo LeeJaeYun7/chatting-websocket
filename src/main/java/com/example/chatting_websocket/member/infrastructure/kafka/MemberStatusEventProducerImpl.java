@@ -10,7 +10,10 @@ import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.errors.TimeoutException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.retry.policy.SimpleRetryPolicy;
+import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,6 +21,8 @@ import org.springframework.stereotype.Component;
 public class MemberStatusEventProducerImpl implements MemberStatusEventProducer {
 
     private final JsonConverter jsonConverter;
+    private final RetryTemplate retryTemplate;  // RetryTemplate 주입
+    private final SimpleRetryPolicy retryPolicy;
     private KafkaProducer<String, String> producer;
 
     @Autowired
@@ -33,7 +38,26 @@ public class MemberStatusEventProducerImpl implements MemberStatusEventProducer 
         String eventJson = jsonConverter.convertToJson(event);
 
         ProducerRecord<String, String> record = new ProducerRecord<>(MemberStatusTopics.MEMBER_STATUS_TOPIC, eventJson);
-        producer.send(record);
+
+        // RetryTemplate을 사용하여 재시도 로직 적용
+        retryTemplate.execute(context -> {
+            try {
+                producer.send(record);  // 메시지 발송
+            } catch (TimeoutException e) {
+                // 재시도 횟수가 초과되면 메시지를 DLQ로 전송
+                if (context.getRetryCount() >= retryPolicy.getMaxAttempts()) {
+                    sendToDeadLetterQueue(eventJson);  // 실패한 메시지를 DLQ로 전송
+                }
+                throw e;  // 예외를 다시 던져서 재시도 로직이 동작하도록 함
+            }
+            return null;
+        });
+    }
+
+    private void sendToDeadLetterQueue(String eventJson) {
+        // 실패한 메시지를 데드레터 큐로 전송
+        ProducerRecord<String, String> dlqRecord = new ProducerRecord<>(MemberStatusTopics.DLQ_TOPIC, eventJson);
+        producer.send(dlqRecord);  // DLQ에 메시지 발송
     }
 
     @PreDestroy

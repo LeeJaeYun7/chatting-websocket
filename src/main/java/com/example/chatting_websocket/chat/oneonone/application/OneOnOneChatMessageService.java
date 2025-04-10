@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class OneOnOneChatMessageService {
-
     private final OneOnOneChatMessageProducer oneOnOneChatMessageProducer;
 
     public void sendOneOnOneChatMessage(String roomId, String senderId, String content) {
