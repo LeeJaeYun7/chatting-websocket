@@ -1,20 +1,22 @@
 package com.example.chatting_websocket.chat.shared.validator;
+
+import com.example.chatting_websocket.chat.group.controller.dto.GroupChatMessageRequest;
+import com.example.chatting_websocket.chat.oneonone.controller.dto.OneOnOneChatMessageRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import com.example.chatting_websocket.chat.oneonone.controller.dto.OneOnOneChatMessageRequest;
 
 @Component
-public class ChatMessageValidator implements Validator {
+public class GroupChatMessageValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return OneOnOneChatMessageRequest.class.isAssignableFrom(clazz);
+        return GroupChatMessageRequest.class.isAssignableFrom(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        OneOnOneChatMessageRequest request = (OneOnOneChatMessageRequest) target;
+        GroupChatMessageRequest request = (GroupChatMessageRequest) target;
 
         // 메시지가 비어있거나 1000자 이상일 경우
         if (request.getContent() == null || request.getContent().trim().isEmpty()) {
@@ -35,8 +37,8 @@ public class ChatMessageValidator implements Validator {
             errors.rejectValue("content", "invalid", "메시지에 HTML 태그를 포함할 수 없습니다.");
         }
 
-        // 알파벳, 숫자, 구두점, 공백만 허용
-        if (request.getContent() != null && !request.getContent().matches("^[\\p{L}\\p{N}\\p{P}\\p{Zs}]+$")) {
+
+        if (request.getContent() != null && !request.getContent().matches("^[\\p{L}\\p{N}\\p{Zs}\\p{P}~!]+$"))  {
             errors.rejectValue("content", "invalid", "메시지는 텍스트만 포함할 수 있습니다.");
         }
     }

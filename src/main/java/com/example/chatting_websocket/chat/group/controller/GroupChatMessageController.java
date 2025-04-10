@@ -21,7 +21,7 @@ public class GroupChatMessageController {
     @MessageMapping("/v1/chatMessage/group")
     @SendTo("/topic/chatMessage/group")
     public void sendGroupChatMessage(GroupChatMessageRequest groupChatMessageRequest, SimpMessageHeaderAccessor headerAccessor) {
-        validationService.validate(groupChatMessageRequest);
+        validationService.validateGroupChat(groupChatMessageRequest);
 
         String roomId = groupChatMessageRequest.getRoomId();
         String senderId = headerAccessor.getSessionAttributes().get("AUTHENTICATED_MEMBER_ID").toString();

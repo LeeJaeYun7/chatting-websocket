@@ -19,7 +19,7 @@ public class OneOnOneChatMessageController {
     @MessageMapping("/v1/chatMessage/oneOnOne")
     @SendTo("/topic/chatMessage/oneOnOne")
     public void sendChatMessage(OneOnOneChatMessageRequest chatMessageRequest, SimpMessageHeaderAccessor headerAccessor) {
-        validationService.validate(chatMessageRequest);
+        validationService.validateOneOnOneChat(chatMessageRequest);
 
 
         String roomId = chatMessageRequest.getRoomId();

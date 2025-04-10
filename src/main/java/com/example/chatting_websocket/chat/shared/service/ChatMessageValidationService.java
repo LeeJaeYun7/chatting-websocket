@@ -2,7 +2,8 @@ package com.example.chatting_websocket.chat.shared.service;
 
 import com.example.chatting_websocket.chat.group.controller.dto.GroupChatMessageRequest;
 import com.example.chatting_websocket.chat.oneonone.controller.dto.OneOnOneChatMessageRequest;
-import com.example.chatting_websocket.chat.shared.validator.ChatMessageValidator;
+import com.example.chatting_websocket.chat.shared.validator.GroupChatMessageValidator;
+import com.example.chatting_websocket.chat.shared.validator.OneOnOneChatMessageValidator;
 import com.example.chatting_websocket.shared.exceptions.CustomException;
 import com.example.chatting_websocket.shared.exceptions.CustomExceptionType;
 import lombok.RequiredArgsConstructor;
@@ -16,11 +17,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ChatMessageValidationService {
 
-    private final ChatMessageValidator validator;
+    private final OneOnOneChatMessageValidator oneOnOneValidator;
+    private final GroupChatMessageValidator groupValidator;
 
-    public void validate(OneOnOneChatMessageRequest chatMessageRequest) {
+    public void validateOneOnOneChat(OneOnOneChatMessageRequest chatMessageRequest) {
         Errors errors = new BeanPropertyBindingResult(chatMessageRequest, "chatMessageRequest");
-        validator.validate(chatMessageRequest, errors);
+        oneOnOneValidator.validate(chatMessageRequest, errors);
 
         if (errors.hasErrors()) {
             String errorCode = errors.getFieldError("content").getCode(); // 예: "empty", "tooLong", "invalid"
@@ -35,9 +37,9 @@ public class ChatMessageValidationService {
         }
     }
 
-    public void validate(GroupChatMessageRequest chatMessageRequest) {
+    public void validateGroupChat(GroupChatMessageRequest chatMessageRequest) {
         Errors errors = new BeanPropertyBindingResult(chatMessageRequest, "chatMessageRequest");
-        validator.validate(chatMessageRequest, errors);
+        groupValidator.validate(chatMessageRequest, errors);
 
         if (errors.hasErrors()) {
             String errorCode = errors.getFieldError("content").getCode(); // 예: "empty", "tooLong", "invalid"
