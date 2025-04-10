@@ -1,11 +1,12 @@
 package com.example.chatting_websocket.member.infrastructure.redis;
 
 import com.example.chatting_websocket.member.controller.dto.MemberStatusNotificationResponse;
+import com.example.chatting_websocket.member.domain.event.MemberNotificationEventSubscriber;
 import com.example.chatting_websocket.member.domain.event.MemberStatusNotificationEvent;
 import com.example.chatting_websocket.member.infrastructure.redis.enums.RedisKey;
 import com.example.chatting_websocket.shared.utils.JsonConverter;
-import com.example.chatting_websocket.websocket.infrastructure.SessionManager;
-import com.example.chatting_websocket.websocket.infrastructure.WebSocketClientMessageSender;
+import com.example.chatting_websocket.websocket.infrastructure.inmemory.SessionManager;
+import com.example.chatting_websocket.websocket.application.WebSocketClientMessageSender;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +19,7 @@ import java.util.List;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class MemberStatusNotificationEventSubscriber {
+public class MemberStatusNotificationEventSubscriberImpl implements MemberNotificationEventSubscriber {
 
     private final RedissonClient redissonClient;
     private final JsonConverter jsonConverter;

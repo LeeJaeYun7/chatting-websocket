@@ -1,9 +1,10 @@
-package com.example.chatting_websocket.member.infrastructure.kafka;
+package com.example.chatting_websocket.chat.oneonone.infrastructure.kafka;
 
+
+import com.example.chatting_websocket.chat.oneonone.domain.event.OneOnOneChatMessageProducer;
+import com.example.chatting_websocket.chat.oneonone.domain.event.OneOnOneChatMessageServerEvent;
+import com.example.chatting_websocket.chat.oneonone.infrastructure.kafka.enums.OneOnOneChatMessageTopics;
 import com.example.chatting_websocket.config.KafkaConfig;
-import com.example.chatting_websocket.member.domain.event.MemberStatusChangeEvent;
-import com.example.chatting_websocket.member.domain.event.MemberStatusEventProducer;
-import com.example.chatting_websocket.member.infrastructure.kafka.enums.MemberStatusTopics;
 import com.example.chatting_websocket.shared.utils.JsonConverter;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class MemberStatusEventProducerImpl implements MemberStatusEventProducer {
+public class OneOnOneChatMessageProducerImpl implements OneOnOneChatMessageProducer {
 
     private final JsonConverter jsonConverter;
     private KafkaProducer<String, String> producer;
@@ -28,11 +29,9 @@ public class MemberStatusEventProducerImpl implements MemberStatusEventProducer 
         this.producer = new KafkaProducer<>(kafkaConfig.kafkaProducerConfig());
     }
 
-    public void sendMemberStatusChangeEvent(String memberId, boolean isOnline) {
-        MemberStatusChangeEvent event = MemberStatusChangeEvent.of(memberId, isOnline);
+    public void sendOneOnOneChatMessage(OneOnOneChatMessageServerEvent event){
         String eventJson = jsonConverter.convertToJson(event);
-
-        ProducerRecord<String, String> record = new ProducerRecord<>(MemberStatusTopics.MEMBER_STATUS_TOPIC, eventJson);
+        ProducerRecord<String, String> record = new ProducerRecord<>(OneOnOneChatMessageTopics.CHAT_MESSAGE_TOPIC, eventJson);
         producer.send(record);
     }
 

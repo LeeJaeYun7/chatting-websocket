@@ -28,11 +28,11 @@ public class GroupChatMessageEvent {
 
     public static GroupChatMessageEvent of(String roomId, String senderId, List<String> participantIds, String content, LocalDateTime timestamp) {
         return GroupChatMessageEvent.builder()
-                .roomId(roomId)
-                .senderId(senderId)
-                .participantIds(participantIds)
-                .content(content)
-                .timestamp(timestamp)
-                .build();
+                                    .roomId(roomId)
+                                    .senderId(senderId)
+                                    .participantIds(participantIds)
+                                    .content(content)
+                                    .timestamp(timestamp)
+                                    .build();
     }
 }

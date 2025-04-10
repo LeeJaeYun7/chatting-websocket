@@ -1,4 +1,4 @@
-const jwtToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDc0NTk2ODg1NDE5NTA1ODE0IiwiaWF0IjoxNzQ0MTg5MTI5LCJleHAiOjE3NDQxOTI3Mjl9.WDMNmiD0JMoY2CGzox8-mLl7AO5KfC_7QPgJLuZp8RJN3cPGr7LOFBv0afwuINKWZ48zqnHx_kDUHbWCSb5wWQ"
+const jwtToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDc0NTk2ODg1NDE5NTA1ODE0IiwiaWF0IjoxNzQ0MjU0NDY4LCJleHAiOjE3NDQyNTgwNjh9.WC3yeTWw7AA9bQ5-9l38OXVwQ51SrIgrs9gYPQp8WMPNVFc2ICOCt1l9ZVkZFEOaBjn1ucPZDnIXLj35AOVIzg"
 
 const stompClient = new StompJs.Client({
     brokerURL: 'ws://localhost:8081/gs-guide-websocket',
