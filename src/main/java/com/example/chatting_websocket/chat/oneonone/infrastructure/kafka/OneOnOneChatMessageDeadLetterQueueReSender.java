@@ -1,9 +1,7 @@
 package com.example.chatting_websocket.chat.oneonone.infrastructure.kafka;
 
-import com.example.chatting_websocket.chat.group.infrastructure.kafka.enums.GroupChatMessageTopics;
 import com.example.chatting_websocket.chat.oneonone.infrastructure.kafka.enums.OneOnOneChatMessageTopics;
 import com.example.chatting_websocket.config.KafkaConfig;
-import com.example.chatting_websocket.shared.utils.JsonConverter;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
