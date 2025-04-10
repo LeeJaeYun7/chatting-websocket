@@ -17,8 +17,8 @@ public class WebSocketMemberSessionDAO {
         sessionMap.put(memberId, sessionId);
     }
 
-    public String getWebSocketSession(String memberId){
+    public String removeWebSocketSession(String memberId){
         RMapCache<String, String> sessionMap = redissonClient.getMapCache(RedisKey.WEBSOCKET_SESSION_KEY);
-        return sessionMap.get(memberId);
+        return sessionMap.remove(memberId);
     }
 }
