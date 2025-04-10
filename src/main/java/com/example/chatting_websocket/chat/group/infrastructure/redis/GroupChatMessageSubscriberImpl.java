@@ -36,7 +36,8 @@ public class GroupChatMessageSubscriberImpl implements GroupChatMessageSubscribe
         }
     }
 
-    private void startGroupChatMessageEventChannelListening() {
+    @Override
+    public void startGroupChatMessageEventChannelListening() {
         // Redis 채널을 구독하기 위한 RTopic 객체
         RTopic topic = redissonClient.getTopic(RedisKey.GROUP_CHAT_CHANNEL);
 

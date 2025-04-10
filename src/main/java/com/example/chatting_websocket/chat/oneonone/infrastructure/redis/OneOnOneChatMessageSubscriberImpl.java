@@ -35,7 +35,8 @@ public class OneOnOneChatMessageSubscriberImpl implements OneOnOneChatMessageSub
         }
     }
 
-    private void startOneOnOneChatMessageEventChannelListening() {
+    @Override
+    public void startOneOnOneChatMessageEventChannelListening() {
         // Redis 채널을 구독하기 위한 RTopic 객체
         RTopic topic = redissonClient.getTopic(RedisKey.ONEONONE_CHAT_CHANNEL);
 
